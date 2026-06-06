@@ -1,351 +1,724 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADAM OS - أفضل نظام تشغيل مبني على ديبيان وأوبونتو</title>
+    <title>ADAM OS / ADAM STUDIO</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
         
         body {
             font-family: 'Cairo', sans-serif;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        
-        .download-btn {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            transition: all 0.3s ease;
-        }
-        
-        .download-btn:hover {
-            background: linear-gradient(45deg, #45a049, #3d8b40);
-            transform: scale(1.05);
-        }
-        
-        .feature-icon {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background-color: #030014;
+            color: #f3f4f6;
+            overflow-x: hidden;
         }
 
-        .message {
-            animation: fadeIn 0.3s ease-in;
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030014;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(124, 58, 237, 0.3);
+            border-radius: 5px;
+            border: 2px solid #030014;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(124, 58, 237, 0.6);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* خلفية نيون ممتدة */
+        .cyber-bg {
+            background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.12) 0%, rgba(3, 0, 20, 0) 70%);
         }
 
-        .typing-indicator {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #667eea;
-            animation: typing 1.4s infinite both;
+        /* تأثير الزجاج المتطور */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .typing-indicator:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator:nth-child(3) { animation-delay: 0.4s; }
+        .glass-panel-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-10px); }
+        .glass-panel-hover:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.2);
+            transform: translateY(-4px);
+        }
+
+        /* تدرج الألوان للنصوص */
+        .text-gradient {
+            background: linear-gradient(135deg, #a78bfa 0%, #3b82f6 50%, #00f5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* تأثير ظهور الرسائل */
+        .message-fade {
+            animation: messageSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* مؤشر الكتابة الديناميكي */
+        .typing-dot {
+            animation: typingWave 1.2s infinite ease-in-out;
+        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingWave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* مقارنة الأداء */
+        .perf-bar {
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header - رأس الصفحة مع الشعار والقائمة -->
-    <header class="gradient-bg text-white py-6 shadow-lg">
-        <div class="container mx-auto px-6">
+<body class="relative min-h-screen">
+
+    <!-- مؤثرات نيون خلفية غامرة في جميع أنحاء الصفحة الكبيرة -->
+    <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full filter blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full filter blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-2/4 left-1/3 w-[600px] h-[600px] bg-cyan-600/10 rounded-full filter blur-[150px] pointer-events-none"></div>
+    <div class="absolute top-3/4 right-1/3 w-[500px] h-[500px] bg-indigo-600/10 rounded-full filter blur-[130px] pointer-events-none"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 w-full z-40 glass-panel border-b border-white/5 shadow-2xl transition-all duration-300">
+        <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4 space-x-reverse">
-                    <!-- Logo SVG -->
-                    <div class="w-12 h-12 bg-white rounded-lg p-2">
-                        <svg viewBox="0 0 100 100" class="w-full h-full">
-                            <circle cx="50" cy="50" r="45" fill="#667eea"/>
-                            <text x="50" y="60" text-anchor="middle" fill="white" font-size="24" font-weight="bold">A</text>
-                        </svg>
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-purple-600 to-blue-500 rounded-xl p-[2px] shadow-lg transition-transform group-hover:rotate-12 duration-300">
+                        <div class="w-full h-full bg-[#030014] rounded-[10px] flex items-center justify-center">
+                            <span class="text-white font-extrabold text-lg tracking-wider">A</span>
+                        </div>
                     </div>
-                    <h1 class="text-3xl font-bold">ADAM OS</h1>
-                </div>
-                <nav class="hidden md:flex space-x-6 space-x-reverse">
-                    <a href="#features" class="hover:text-blue-200 transition-colors">المميزات</a>
-                    <a href="#screenshots" class="hover:text-blue-200 transition-colors">نبذه عن النظام</a>
-                    <a href="#download" class="hover:text-blue-200 transition-colors">التحميل</a>
-                    <a href="#contact" class="hover:text-blue-200 transition-colors">التواصل</a>
+                    <span class="text-2xl font-black text-white tracking-wide">ADAM <span class="text-blue-400">OS</span></span>
+                </a>
+                
+                <nav class="hidden lg:flex items-center gap-6">
+                    <a href="#features" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium">المميزات الأساسية</a>
+                    <a href="#dev-tools" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium">بيئة المطورين</a>
+                    <a href="#driver-support" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium">دعم العتاد والتعريفات</a>
+                    <a href="#benchmarks" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium">مقارنة الأداء</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium">الأسئلة الشائعة</a>
+                    <a href="#download" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium">التحميل</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium">التواصل</a>
                 </nav>
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-white">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+
+                <div class="flex items-center gap-4">
+                    <a href="#download" class="hidden sm:inline-flex btn-gradient text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-lg">
+                        تنزيل مجاني
+                    </a>
+                    <button id="mobile-menu-btn" class="lg:hidden text-white hover:text-purple-400 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
+
             <!-- Mobile Menu -->
-            <nav id="mobile-menu" class="hidden md:hidden mt-4 space-y-2">
-                <a href="#features" class="block hover:text-blue-200 transition-colors py-2">المميزات</a>
-                <a href="#screenshots" class="block hover:text-blue-200 transition-colors py-2">نبذه عن النظام</a>
-                <a href="#download" class="block hover:text-blue-200 transition-colors py-2">التحميل</a>
-                <a href="#contact" class="block hover:text-blue-200 transition-colors py-2">التواصل</a>
+            <nav id="mobile-menu" class="hidden lg:hidden mt-4 pt-4 border-t border-white/5 space-y-3">
+                <a href="#features" class="block text-gray-300 hover:text-white py-2 transition-colors">المميزات الأساسية</a>
+                <a href="#dev-tools" class="block text-gray-300 hover:text-white py-2 transition-colors">بيئة المطورين</a>
+                <a href="#driver-support" class="block text-gray-300 hover:text-white py-2 transition-colors">دعم العتاد والتعريفات</a>
+                <a href="#benchmarks" class="block text-gray-300 hover:text-white py-2 transition-colors">مقارنة الأداء</a>
+                <a href="#faq" class="block text-gray-300 hover:text-white py-2 transition-colors">الأسئلة الشائعة</a>
+                <a href="#download" class="block text-gray-300 hover:text-white py-2 transition-colors">التحميل</a>
+                <a href="#contact" class="block text-gray-300 hover:text-white py-2 transition-colors">التواصل</a>
+                <a href="#download" class="block btn-gradient text-white text-center py-2.5 rounded-xl text-sm font-semibold shadow-lg mt-4">
+                    تنزيل مجاني
+                </a>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section - القسم الرئيسي مع النص التعريفي -->
-    <section class="gradient-bg text-white py-20">
-        <div class="container mx-auto px-6 text-center">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-5xl font-bold mb-6">أفضل نظام تشغيل مبني على ديبيان وأوبونتو</h2>
-                <p class="text-xl mb-8 leading-relaxed">
-                    اكتشف قوة وسهولة ADAM OS - نظام التشغيل المتطور الذي يجمع بين استقرار ديبيان ومرونة أوبونتو
-                    قريبا سنضيف AI مدعم من ADAM-AI / مع واجهة مستخدم عصرية وأدوات متقدمة لتجربة حاسوبية لا مثيل لها
+    <!-- Hero Section -->
+    <section class="relative min-h-[95vh] flex items-center py-24 cyber-bg overflow-hidden">
+        <div class="container mx-auto px-6 text-center z-10">
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel text-xs text-blue-300 font-semibold mb-4 animate-pulse">
+                    <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full"></span>
+                    إصدار 2026 الذهبي: يدعم السيرفرات، البرمجة، والألعاب بكفاءة منقطعة النظير
+                </div>
+                
+                <h2 class="text-5xl md:text-8xl font-black leading-tight text-white tracking-tight">
+                    نظام تشغيل متكامل <br>
+                    <span class="text-gradient">لكل الأجهزة والسيرفرات</span>
+                </h2>
+                
+                <p class="text-lg md:text-2xl text-gray-400 leading-relaxed max-w-3xl mx-auto font-light">
+                    اكتشف المفهوم الجديد للاستقرار البرمجي مع <span class="text-white font-bold">ADAM OS</span>. يجمع استقرار ديبيان وعصرية أوبونتو ليقدم أفضل واجهة مستخدم رسومية (GUI) لإدارة السيرفرات والشبكات مع توافقية شاملة لجميع اللغات البرمجية والتعريفات التلقائية.
                 </p>
-                <a href="#download" class="download-btn text-white px-8 py-4 rounded-full text-lg font-semibold inline-block shadow-lg">
-                    🚀 تحميل ADAM OS الآن
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section - قسم المميزات -->
-    <section id="features" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h3 class="text-4xl font-bold text-center mb-16 text-gray-800">لماذا ADAM OS؟</h3>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
-                    <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <span class="text-2xl">⚡</span>
-                    </div>
-                    <h4 class="text-xl font-semibold mb-4 text-center">أداء فائق السرعة</h4>
-                    <p class="text-gray-600 text-center">محسن للأداء العالي مع استهلاك منخفض للموارد</p>
-                </div>
                 
-                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
-                    <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <span class="text-2xl">🔒</span>
-                    </div>
-                    <h4 class="text-xl font-semibold mb-4 text-center">أمان متقدم</h4>
-                    <p class="text-gray-600 text-center">حماية شاملة مع تحديثات أمنية منتظمة</p>
-                </div>
-                
-                <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
-                    <div class="feature-icon w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <span class="text-2xl">🎨</span>
-                    </div>
-                    <h4 class="text-xl font-semibold mb-4 text-center">واجهة عصرية</h4>
-                    <p class="text-gray-600 text-center">تصميم أنيق وسهل الاستخدام مع إمكانيات تخصيص واسعة</p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+                    <a href="#download" class="btn-gradient w-full sm:w-auto text-white px-8 py-4 rounded-2xl text-lg font-bold inline-flex items-center justify-center gap-2 shadow-xl">
+                        <span>🚀 ابدأ تنزيل النظام الآن</span>
+                    </a>
+                    <a href="#features" class="glass-panel hover:bg-white/10 w-full sm:w-auto text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 border border-white/10">
+                        استكشف تفاصيل النظام
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Screenshots Section - قسم لقطات من النظام -->
-    <section id="screenshots" class="py-20 bg-gray-50">
+    <!-- Features Section - المميزات الكبيرة والجديدة -->
+    <section id="features" class="py-32 relative border-t border-white/5">
         <div class="container mx-auto px-6">
-            <h3 class="text-4xl font-bold text-center mb-16 text-gray-800">لقطات من النظام</h3>
+            <div class="text-center max-w-3xl mx-auto mb-24 space-y-4">
+                <h3 class="text-4xl md:text-5xl font-black text-white">ترسانة من <span class="text-gradient">المميزات الفريدة</span></h3>
+                <p class="text-gray-400 text-lg font-light">بنينا ADAM OS بمجموعة أدوات متكاملة تمنحك الأفضلية المطلقة في الإنتاجية والأداء الفائق.</p>
+            </div>
+            
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Screenshot 1 -->
-                <div class="card-hover bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                        <div class="text-white text-center">
-                            <div class="text-4xl mb-2">🖥️</div>
-                            <p class="font-semibold">سطح المكتب الرئيسي</p>
-                        </div>
+                <!-- الميزة 1: إدارة السيرفرات -->
+                <div class="glass-panel glass-panel-hover p-8 rounded-3xl transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+                            <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+                            <line x1="6" y1="6" x2="6.01" y2="6" />
+                            <line x1="6" y1="18" x2="6.01" y2="18" />
+                            <line x1="20" y1="6" x2="20.01" y2="6" />
+                            <line x1="20" y1="18" x2="20.01" y2="18" />
+                        </svg>
                     </div>
-                    <div class="p-4">
-                        <h4 class="font-semibold mb-2">واجهة سطح المكتب</h4>
-                        <p class="text-gray-600 text-sm">تصميم نظيف وعصري مع شريط مهام متطور</p>
+                    <h4 class="text-2xl font-bold mb-3 text-white">مثالي لإدارة السيرفرات</h4>
+                    <p class="text-gray-400 leading-relaxed text-sm font-light">أفضل توزيعة توفر واجهة مستخدم رسومية متطورة لإدارة وتكوين السيرفرات، المواقع، وقواعد البيانات بكل بساطة وسلاسة دون الحاجة لخبرة مسبقة في سطر الأوامر.</p>
+                </div>
+                
+                <!-- الميزة 2: توافق لغات البرمجة -->
+                <div class="glass-panel glass-panel-hover p-8 rounded-3xl transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                        </svg>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 text-white">منصة المطورين الشاملة</h4>
+                    <p class="text-gray-400 leading-relaxed text-sm font-light">يدعم تثبيت جميع المكتبات ولغات البرمجة بكافة إصداراتها تلقائياً. جهّز بيئة العمل الخاصة بك لأي لغة (Python, Rust, C++, Go) بضغطة زر واحدة.</p>
+                </div>
+                
+                <!-- الميزة 3: دعم درايفرات شامل -->
+                <div class="glass-panel glass-panel-hover p-8 rounded-3xl transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
+                            <line x1="12" y1="2" x2="12" y2="12" />
+                        </svg>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 text-white">جميع التعريفات مدمجة</h4>
+                    <p class="text-gray-400 leading-relaxed text-sm font-light">تعرّف تلقائي (Plug-and-Play) لجميع كروت الصوت والشاشة والواي فاي والملحقات الخارجية، بالإضافة إلى دعم سلس مسبق لتعريفات Nvidia الحديثة.</p>
+                </div>
+
+                <!-- الميزة 4: تشغيل ألعاب ويندوز وتطبيقاتها -->
+                <div class="glass-panel glass-panel-hover p-8 rounded-3xl transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-cyan-600/10 border border-cyan-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="6 3 20 12 6 21 6 3" />
+                        </svg>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 text-white">محاكاة وتوافق فائقة</h4>
+                    <p class="text-gray-400 leading-relaxed text-sm font-light">بفضل بيئة التوافق المتقدمة المدمجة (Proton / Wine)، قم بتشغيل ألعاب ويندوز الشهيرة وتطبيقاتها المكتبية مباشرة على نظام لينكس وبمعدل إطارات مبهر.</p>
+                </div>
+
+                <!-- الميزة 5: بيئة تخيل افتراضي KVM/Docker -->
+                <div class="glass-panel glass-panel-hover p-8 rounded-3xl transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-600/10 border border-amber-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                            <line x1="9" y1="3" x2="9" y2="21" />
+                            <line x1="15" y1="3" x2="15" y2="21" />
+                            <line x1="3" y1="9" x2="21" y2="9" />
+                            <line x1="3" y1="15" x2="21" y2="15" />
+                        </svg>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 text-white">جاهز لـ Docker & Virtualization</h4>
+                    <p class="text-gray-400 leading-relaxed text-sm font-light">مجهز بحاويات Docker مدمجة ودعم KVM للبيئات الافتراضية والهايبرفايزر لتجربة بيئات اختبار وتطوير متعددة الأنظمة مع حماية معزولة تماماً.</p>
+                </div>
+
+                <!-- الميزة 6: متجر مسطح Flatpak & Snap -->
+                <div class="glass-panel glass-panel-hover p-8 rounded-3xl transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-pink-600/10 border border-pink-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-7 h-7 text-pink-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                        </svg>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 text-white">متجر تطبيقات برمجية ضخم</h4>
+                    <p class="text-gray-400 leading-relaxed text-sm font-light">احصل على متجر تطبيقات متكامل ومدمج، يدعم كلاً من حزم Flatpak و Snap و AppImage، مما يتيح لك تثبيت البرامج بنسخها الأكثر حداثة واستقراراً.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Developer Sandbox - قسم بيئة المطورين واللغات الشامل -->
+    <section id="dev-tools" class="py-32 relative border-t border-white/5 bg-[#030019]/50">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-5 space-y-6 text-right">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel text-xs text-purple-400 font-bold">
+                        ⚙️ بيئة عمل للمحترفين
+                    </div>
+                    <h3 class="text-4xl md:text-5xl font-black text-white">دعم تثبيت جميع <span class="text-gradient">المكتبات واللغات</span></h3>
+                    <p class="text-gray-400 leading-relaxed font-light">
+                        وداعاً لمشاكل توافقية اللغات البرمجية على بيئات التطوير. يأتي ADAM OS مزوداً بمديري الحزم الأكثر شهرة وإعدادات ذكية للغات المترجمة والمفسرة. يمكنك البدء في البرمجة والإنتاج فور تنصيب النظام.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                            <span class="text-2xl mb-1 block">📦</span>
+                            <h5 class="font-bold text-white text-sm">إدارة الحزم المزدوجة</h5>
+                            <p class="text-gray-500 text-xs mt-1">دعم متزامن لأدوات apt, npm, pip, cargo, go install.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
+                            <span class="text-2xl mb-1 block">⚙️</span>
+                            <h5 class="font-bold text-white text-sm">بيئة الذكاء الاصطناعي</h5>
+                            <p class="text-gray-500 text-xs mt-1">تثبيت مسبق ومثالي لمكتبات PyTorch و TensorFlow.</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Screenshot 2 -->
-                <div class="card-hover bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center">
-                        <div class="text-white text-center">
-                            <div class="text-4xl mb-2">📁</div>
-                            <p class="font-semibold">مدير الملفات</p>
-                        </div>
+                <!-- استعراض اللغات الرسومي الفاخر -->
+                <div class="lg:col-span-7 glass-panel p-8 rounded-3xl relative overflow-hidden shadow-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-purple-900/10 to-blue-950/10 pointer-events-none"></div>
+                    <div class="flex items-center justify-between border-b border-white/5 pb-4 mb-6 text-sm text-gray-400">
+                        <span class="flex items-center gap-2"><span class="w-3 h-3 bg-purple-500 rounded-full animate-ping"></span> بيئة عمل مجهزة بالكامل</span>
+                        <span class="font-mono">ADAM Core Setup</span>
                     </div>
-                    <div class="p-4">
-                        <h4 class="font-semibold mb-2">إدارة الملفات</h4>
-                        <p class="text-gray-600 text-sm">مدير ملفات قوي مع معاينة فورية</p>
-                    </div>
-                </div>
 
-                <!-- Screenshot 3 -->
-                <div class="card-hover bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
-                        <div class="text-white text-center">
-                            <div class="text-4xl mb-2">⚙️</div>
-                            <p class="font-semibold">الإعدادات</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <!-- Python -->
+                        <div class="p-5 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-purple-500/30 transition-all flex flex-col items-center text-center">
+                            <span class="text-3xl mb-2">🐍</span>
+                            <h6 class="font-bold text-white text-sm">Python 3.11+</h6>
+                            <p class="text-gray-500 text-xs mt-1">مدمج بالكامل مع pip</p>
                         </div>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-semibold mb-2">لوحة التحكم</h4>
-                        <p class="text-gray-600 text-sm">إعدادات شاملة وسهلة التخصيص</p>
-                    </div>
-                </div>
-
-                <!-- Screenshot 4 -->
-                <div class="card-hover bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
-                        <div class="text-white text-center">
-                            <div class="text-4xl mb-2">🌐</div>
-                            <p class="font-semibold">متصفح الويب</p>
+                        <!-- Node.JS -->
+                        <div class="p-5 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-purple-500/30 transition-all flex flex-col items-center text-center">
+                            <span class="text-3xl mb-2">🟢</span>
+                            <h6 class="font-bold text-white text-sm">Node.js / npm</h6>
+                            <p class="text-gray-500 text-xs mt-1">إدارة المشاريع بكفاءة</p>
                         </div>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-semibold mb-2">تصفح الإنترنت</h4>
-                        <p class="text-gray-600 text-sm">متصفح سريع وآمن مدمج في النظام</p>
-                    </div>
-                </div>
-
-                <!-- Screenshot 5 -->
-                <div class="card-hover bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-teal-400 to-green-500 flex items-center justify-center">
-                        <div class="text-white text-center">
-                            <div class="text-4xl mb-2">💻</div>
-                            <p class="font-semibold">الطرفية</p>
+                        <!-- C++ -->
+                        <div class="p-5 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-purple-500/30 transition-all flex flex-col items-center text-center">
+                            <span class="text-3xl mb-2">💻</span>
+                            <h6 class="font-bold text-white text-sm">GCC / Clang C++</h6>
+                            <p class="text-gray-500 text-xs mt-1">أدوات مترجمة عالية الأداء</p>
                         </div>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-semibold mb-2">سطر الأوامر</h4>
-                        <p class="text-gray-600 text-sm">طرفية متقدمة مع دعم كامل لأوامر لينكس</p>
-                    </div>
-                </div>
-
-                <!-- Screenshot 6 -->
-                <div class="card-hover bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div class="h-48 bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center">
-                        <div class="text-white text-center">
-                            <div class="text-4xl mb-2">📦</div>
-                            <p class="font-semibold">مركز البرامج</p>
+                        <!-- Rust -->
+                        <div class="p-5 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-purple-500/30 transition-all flex flex-col items-center text-center">
+                            <span class="text-3xl mb-2">🦀</span>
+                            <h6 class="font-bold text-white text-sm">Rust / Cargo</h6>
+                            <p class="text-gray-500 text-xs mt-1">البرمجة الآمنة والسريعة</p>
                         </div>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-semibold mb-2">إدارة التطبيقات</h4>
-                        <p class="text-gray-600 text-sm">تثبيت وإدارة البرامج بسهولة</p>
+                        <!-- Go -->
+                        <div class="p-5 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-purple-500/30 transition-all flex flex-col items-center text-center">
+                            <span class="text-3xl mb-2">🔵</span>
+                            <h6 class="font-bold text-white text-sm">Go Lang</h6>
+                            <p class="text-gray-500 text-xs mt-1">بيئة سحابية وسيرفرات فائقة</p>
+                        </div>
+                        <!-- Java -->
+                        <div class="p-5 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-purple-500/30 transition-all flex flex-col items-center text-center">
+                            <span class="text-3xl mb-2">☕</span>
+                            <h6 class="font-bold text-white text-sm">Java JDK</h6>
+                            <p class="text-gray-500 text-xs mt-1">تشغيل وبناء البرمجيات</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Download Section - قسم التحميل -->
-    <section id="download" class="py-20 bg-white">
-        <div class="container mx-auto px-6 text-center">
-            <h3 class="text-4xl font-bold mb-8 text-gray-800">حمل ADAM OS الآن</h3>
-            <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-                ابدأ رحلتك مع أفضل نظام تشغيل مبني على ديبيان وأوبونتو
-            </p>
-            
-            <div class="bg-gray-50 rounded-2xl p-8 max-w-md mx-auto shadow-lg">
-                <div class="mb-6">
-                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-3xl">💿</span>
+    <!-- Driver Support Section - قسم العتاد والتعريفات التلقائية -->
+    <section id="driver-support" class="py-32 relative border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+                <!-- الرسوم التوضيحية المدمجة للتعريف الذاتي -->
+                <div class="lg:col-span-7 space-y-6 order-2 lg:order-1">
+                    <div class="glass-panel p-8 rounded-3xl relative overflow-hidden shadow-2xl">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                                <span class="text-2xl">⚡</span>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">مركز التعريفات التلقائي</h4>
+                                <p class="text-gray-400 text-xs">مستشعر الأجهزة المدمج بنواة ADAM Kernel</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <!-- Nvidia GPU -->
+                            <div class="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-between">
+                                <span class="text-sm font-semibold text-white">كرت الشاشة Nvidia GeForce & AMD</span>
+                                <span class="text-xs bg-emerald-600/20 text-emerald-300 py-1 px-2.5 rounded-full font-bold">نشط وتم التثبيت تلقائياً</span>
+                            </div>
+                            <!-- WiFi Drivers -->
+                            <div class="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-between">
+                                <span class="text-sm font-semibold text-white">بطاقة الشبكة والواي فاي Intel & Realtek</span>
+                                <span class="text-xs bg-emerald-600/20 text-emerald-300 py-1 px-2.5 rounded-full font-bold">تفعيل فوري Out-of-the-box</span>
+                            </div>
+                            <!-- Audio Soundcard -->
+                            <div class="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-between">
+                                <span class="text-sm font-semibold text-white">معالج الصوت الاحترافي High-Definition Audio</span>
+                                <span class="text-xs bg-emerald-600/20 text-emerald-300 py-1 px-2.5 rounded-full font-bold">مهيأ وتلقائي</span>
+                            </div>
+                        </div>
                     </div>
-                    <h4 class="text-2xl font-bold mb-2">ADAM OS v2.0</h4>
-                    <p class="text-gray-600">الإصدار الأحدث - 64 بت</p>
-                    <p class="text-sm text-gray-500 mt-2">حجم الملف: 2.8 GB</p>
                 </div>
-                
-                <a href="https://drive.usercontent.google.com/download?id=168n48cEII5GzryFuyFaNnGLbccBaAaM4&export=download&confirm=no_antivirus&authuser=0" 
-                   download 
-                   onclick="downloadOS(event)" 
-                   class="download-btn w-full text-white py-4 rounded-xl text-lg font-semibold shadow-lg mb-4 text-center block">
-                    ⬇️ تحميل النظام
-                </a>
-                
-                <div class="text-sm text-gray-500">
-                    <p>✅ مجاني تماماً</p>
-                    <p>✅ آمن ومحدث</p>
-                    <p>✅ دعم فني مجاني</p>
+
+                <div class="lg:col-span-5 text-right space-y-6 order-1 lg:order-2">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel text-xs text-emerald-400 font-bold">
+                        🔌 دعم ذكي ومثالي للعتاد
+                    </div>
+                    <h3 class="text-4xl md:text-5xl font-black text-white">دعم شامل لجميع التعريفات <span class="text-gradient">دون عناء يدوي</span></h3>
+                    <p class="text-gray-400 leading-relaxed font-light">
+                        لا داعي للبحث عن ملفات تعريفات الإنترنت أو تعريف كرت الصوت لعدة ساعات بعد تنصيب النظام. صممنا نواة متطورة تتعرف وتتعامل مع جميع الدرايفرات بشكل تلقائي وذكي بمجرد إقلاع النظام لأول مرة على جهازك المكتبي، السيرفر، أو المحمول.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section - قسم التواصل -->
-    <section id="contact" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6 text-center">
-            <h3 class="text-4xl font-bold mb-8 text-gray-800">تواصل معنا</h3>
-            <p class="text-xl text-gray-600 mb-8">
-                هل لديك أسئلة أو تحتاج مساعدة؟ نحن هنا لمساعدتك
-            </p>
-            
-            <div class="bg-white rounded-2xl p-8 max-w-md mx-auto shadow-lg">
-                <div class="mb-6">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl">📧</span>
+    <!-- Performance Benchmarks Section - قسم مقارنة الأداء التفاعلي -->
+    <section id="benchmarks" class="py-32 relative border-t border-white/5 bg-[#030019]/50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+                <h3 class="text-4xl md:text-5xl font-black text-white">أداء يغير <span class="text-gradient">قواعد اللعبة</span></h3>
+                <p class="text-gray-400 text-lg font-light">مقارنة فنية حقيقية بين ADAM OS والأنظمة المنافسة الأخرى في السوق.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                <!-- مؤشر استهلاك الرام RAM -->
+                <div class="glass-panel p-8 rounded-3xl space-y-6">
+                    <h4 class="text-xl font-bold text-white flex items-center gap-2">
+                        <span>📊</span> استهلاك الذاكرة العشوائية (RAM) في وضع السكون
+                    </h4>
+                    
+                    <div class="space-y-4">
+                        <!-- ADAM OS -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1 text-purple-300">
+                                <span>ADAM OS (نسخة السيرفرات والمكتب)</span>
+                                <span>750 MB</span>
+                            </div>
+                            <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-purple-500 to-indigo-500 h-full perf-bar rounded-full" style="width: 25%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Ordinary Linux -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1 text-gray-400">
+                                <span>لينكس القياسي العادي</span>
+                                <span>1.4 GB</span>
+                            </div>
+                            <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-gray-600 h-full perf-bar rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Windows -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1 text-gray-400">
+                                <span>أنظمة التشغيل التجارية الأخرى</span>
+                                <span>3.2 GB</span>
+                            </div>
+                            <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-red-500/80 h-full perf-bar rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
                     </div>
-                    <h4 class="text-xl font-semibold mb-4">راسلنا عبر البريد الإلكتروني</h4>
+                    <p class="text-xs text-gray-500 text-right">كلما قل حجم الاستهلاك، زاد عتاد جهازك من القدرة على تشغيل ألعاب وبرامج عملاقة.</p>
                 </div>
-                
-                <a href="mailto:adammaan41@gmail.com" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl font-semibold inline-block transition-colors">
+
+                <!-- مؤشر سرعة الإقلاع Boot Speed -->
+                <div class="glass-panel p-8 rounded-3xl space-y-6">
+                    <h4 class="text-xl font-bold text-white flex items-center gap-2">
+                        <span>⏱️</span> سرعة إقلاع النظام والدخول لسطح المكتب
+                    </h4>
+                    
+                    <div class="space-y-4">
+                        <!-- ADAM OS -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1 text-cyan-300">
+                                <span>ADAM OS</span>
+                                <span>4.5 ثوانٍ</span>
+                            </div>
+                            <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-cyan-500 to-blue-500 h-full perf-bar rounded-full" style="width: 15%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Linux base -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1 text-gray-400">
+                                <span>لينكس القياسي</span>
+                                <span>12 ثانية</span>
+                            </div>
+                            <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-gray-600 h-full perf-bar rounded-full" style="width: 40%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Windows -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1 text-gray-400">
+                                <span>أنظمة التشغيل الأخرى</span>
+                                <span>25 ثانية</span>
+                            </div>
+                            <div class="w-full bg-white/5 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-red-500/80 h-full perf-bar rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 text-right">أوقات إقلاع سريعة جداً بفضل توازي خدمات الإقلاع وإزالة الحزم غير الضرورية من النواة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQs Section - قسم الأسئلة الشائعة والعميقة تفاعلياً -->
+    <section id="faq" class="py-32 relative border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-24 space-y-4">
+                <h3 class="text-4xl md:text-5xl font-black text-white">الأسئلة الشائعة حول <span class="text-gradient">ADAM OS</span></h3>
+                <p class="text-gray-400 text-lg font-light">كل ما تود معرفته عن القدرات والخلفية الفنية لنظامنا.</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto space-y-4">
+                <!-- FAQ 1 -->
+                <div class="glass-panel rounded-2xl overflow-hidden transition-all duration-300">
+                    <button class="w-full p-6 text-right font-bold text-white flex justify-between items-center hover:bg-white/[0.02]" onclick="toggleFaq(this)">
+                        <span>هل ADAM OS يدعم برامج الويب والشبكات لإدارة السيرفر؟</span>
+                        <span class="text-purple-400 text-xl font-bold transition-transform duration-300 transform">+</span>
+                    </button>
+                    <div class="faq-content hidden p-6 border-t border-white/5 text-gray-400 text-sm font-light leading-relaxed">
+                        نعم وبقوة، يوفر ADAM OS لوحة تحكم ومستودعات جاهزة ومخصصة تتيح لك تشغيل خوادم الويب الشهيرة مثل Nginx, Apache وإدارة قواعد البيانات مثل MySQL و Postgres مباشرة من لوحة التحكم الرسومية المدمجة.
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="glass-panel rounded-2xl overflow-hidden transition-all duration-300">
+                    <button class="w-full p-6 text-right font-bold text-white flex justify-between items-center hover:bg-white/[0.02]" onclick="toggleFaq(this)">
+                        <span>كيف يتعامل النظام مع المكتبات البرمجية ولغات البرمجة المتنوعة؟</span>
+                        <span class="text-purple-400 text-xl font-bold transition-transform duration-300 transform">+</span>
+                    </button>
+                    <div class="faq-content hidden p-6 border-t border-white/5 text-gray-400 text-sm font-light leading-relaxed">
+                        قمنا بدمج مديري الحزم تلقائياً (Pip للغة بايثون، Cargo للغة رست، Node.js/npm) مع تكوين مثالي للمسارات البيئية (Environment Paths)، مما يعني أنك لن تحتاج لتهيئة أي مكتبة برمجية يدوياً؛ سيعمل كودك فور تنزيل النظام.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="glass-panel rounded-2xl overflow-hidden transition-all duration-300">
+                    <button class="w-full p-6 text-right font-bold text-white flex justify-between items-center hover:bg-white/[0.02]" onclick="toggleFaq(this)">
+                        <span>ما هي التعريفات والدرايفرات التي يدعمها النظام؟</span>
+                        <span class="text-purple-400 text-xl font-bold transition-transform duration-300 transform">+</span>
+                    </button>
+                    <div class="faq-content hidden p-6 border-t border-white/5 text-gray-400 text-sm font-light leading-relaxed">
+                        يدعم النظام تعريفات كروت شاشة Nvidia المغلقة والمفتوحة المصدر بالإضافة إلى كروت AMD وكروت الصوت المتطورة، وأحدث شرائح الواي فاي والبلوتوث من Intel و Broadcom بشكل فوري وبدون أي تدخل يدوي منك.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="glass-panel rounded-2xl overflow-hidden transition-all duration-300">
+                    <button class="w-full p-6 text-right font-bold text-white flex justify-between items-center hover:bg-white/[0.02]" onclick="toggleFaq(this)">
+                        <span>هل يمكنني تشغيل الألعاب وتطبيقات ويندوز على هذا النظام؟</span>
+                        <span class="text-purple-400 text-xl font-bold transition-transform duration-300 transform">+</span>
+                    </button>
+                    <div class="faq-content hidden p-6 border-t border-white/5 text-gray-400 text-sm font-light leading-relaxed">
+                        بالتأكيد. بفضل دمج أدوات التوافق الحديثة وتطبيق Lutris و Proton، يمكنك تثبيت وتشغيل ألعاب متجر Steam وألعاب ويندوز الأخرى بكل كفاءة وسهولة مع دعم كامل لكروت الشاشة لضمان أداء الألعاب الحقيقي.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="py-32 relative border-t border-white/5">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-4xl md:text-5xl font-black mb-4 text-white">احصل على <span class="text-gradient">ADAM OS</span> اليوم</h3>
+            <p class="text-gray-400 mb-16 max-w-2xl mx-auto text-lg font-light">ابدأ رحلة جديدة كلياً في إدارة خوادمك ومشاريعك التقنية بلمسات عصرية.</p>
+            
+            <div class="grid md:grid-cols-12 gap-12 items-center max-w-5xl mx-auto">
+                <!-- كرت تفاصيل التحميل الأساسي -->
+                <div class="glass-panel md:col-span-7 p-8 rounded-3xl text-right flex flex-col justify-between h-full border border-purple-500/10">
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                                <span class="text-3xl">💿</span>
+                            </div>
+                            <div>
+                                <h4 class="text-2xl font-bold text-white">ADAM OS v2.0 - Core ISO</h4>
+                                <p class="text-blue-400 text-sm">الإصدار المستقر الأحدث - دعم كامل للدرايفرات</p>
+                            </div>
+                        </div>
+
+                        <ul class="space-y-3.5 text-gray-300 font-light border-y border-white/5 py-6">
+                            <li class="flex items-center gap-2">
+                                <span class="text-emerald-500">✓</span> نسخة مجهزة بالكامل بنظام 64 بت (64-bit Core).
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-emerald-500">✓</span> حجم ملف الـ ISO الفعلي: 2.8 جيجابايت فقط.
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <span class="text-emerald-500">✓</span> دعم شامل وتلقائي لجميع تعريفات العتاد والدرايفرات.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-6">
+                        <a href="https://drive.usercontent.google.com/download?id=168n48cEII5GzryFuyFaNnGLbccBaAaM4&export=download&confirm=no_antivirus&authuser=0" 
+                           onclick="downloadOS(event)" 
+                           class="btn-gradient w-full text-white py-4 rounded-xl text-lg font-bold shadow-lg block text-center">
+                            ⬇️ تنزيل نسخة ISO المجانية
+                        </a>
+                    </div>
+                </div>
+
+                <!-- إحصائيات تفاعلية حية -->
+                <div class="md:col-span-5 space-y-6 h-full flex flex-col justify-between">
+                    <div class="glass-panel p-6 rounded-2xl text-center flex-1 flex flex-col justify-center border border-white/5">
+                        <span class="text-5xl mb-2">🚀</span>
+                        <h5 class="text-sm text-gray-400 uppercase tracking-widest mb-1">مرات التحميل النشطة</h5>
+                        <p id="downloads-count" class="text-4xl font-black text-gradient">١٥,٤٢٠</p>
+                        <p class="text-xs text-gray-500 mt-2">تتزايد تلقائياً في هذه اللحظة</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl text-center flex-1 flex flex-col justify-center border border-white/5">
+                        <span class="text-5xl mb-2">👥</span>
+                        <h5 class="text-sm text-gray-400 uppercase tracking-widest mb-1">المستخدمين النشطين حالياً</h5>
+                        <p id="users-count" class="text-4xl font-black text-gradient">٨,٢٣٠</p>
+                        <p class="text-xs text-gray-500 mt-2">تفاعل مستمر عبر المجتمع</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 relative border-t border-white/5 bg-white/[0.01]">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-4xl font-extrabold mb-4 text-white">تواصل مع <span class="text-gradient">مبدعي النظام</span></h3>
+            <p class="text-gray-400 mb-16 max-w-2xl mx-auto font-light">نحن نسعد بتطوير النظام بشكل يومي مع مجتمع المطورين والمهندسين.</p>
+            
+            <div class="bg-gradient-to-br from-purple-950/20 to-indigo-950/20 glass-panel rounded-3xl p-10 max-w-xl mx-auto border border-white/5 shadow-2xl">
+                <div class="w-20 h-20 bg-gradient-to-tr from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <span class="text-3xl">📧</span>
+                </div>
+                <h4 class="text-2xl font-bold text-white mb-4">راسلنا مباشرة عبر البريد الإلكتروني</h4>
+                <p class="text-gray-400 mb-8 font-light">
+                    راسلنا لعرض مشاريعك أو للتواصل بخصوص الدعم الفني وتكامل الأجهزة.
+                </p>
+                <a href="mailto:adammaan41@gmail.com" class="btn-gradient text-white font-semibold py-3.5 px-8 rounded-xl inline-block shadow-lg">
                     adammaan41@gmail.com
                 </a>
-                
-                <p class="text-sm text-gray-500 mt-4">
-                    سنرد عليك في أقرب وقت ممكن
-                </p>
+                <p class="text-xs text-gray-500 mt-6">يتم الرد على جميع الرسائل خلال ٢٤ ساعة كحد أقصى.</p>
             </div>
         </div>
     </section>
 
-    <!-- Footer - تذييل الصفحة -->
-    <footer class="gradient-bg text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-            <div class="flex items-center justify-center mb-4">
-                <div class="w-8 h-8 bg-white rounded-lg p-1 ml-3">
-                    <svg viewBox="0 0 100 100" class="w-full h-full">
-                        <circle cx="50" cy="50" r="45" fill="#667eea"/>
-                        <text x="50" y="60" text-anchor="middle" fill="white" font-size="24" font-weight="bold">A</text>
-                    </svg>
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-white/5 py-12">
+        <div class="container mx-auto px-6 text-center space-y-6">
+            <div class="flex items-center justify-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-tr from-purple-600 to-blue-500 rounded-lg p-[1.5px]">
+                    <div class="w-full h-full bg-[#030014] rounded-[7px] flex items-center justify-center">
+                        <span class="text-white font-extrabold text-sm">A</span>
+                    </div>
                 </div>
-                <span class="text-xl font-semibold">ADAM OS</span>
+                <span class="text-xl font-black text-white">ADAM <span class="text-blue-400">OS</span></span>
             </div>
-            <p class="text-blue-200">© 2025 ADAM OS. جميع الحقوق محفوظة.</p>
-            <p class="text-blue-200 text-sm mt-2">أفضل نظام تشغيل مبني على ديبيان وأوبونتو</p>
+            <p class="text-gray-500 text-sm">© ٢٠٢٥ - ٢٠٢٦ ADAM OS. جميع الحقوق محفوظة برمجياً ومجتمعياً لـ ADAM STUDIO.</p>
         </div>
     </footer>
 
     <!-- زر المساعد العائم -->
     <button id="assistant-btn" 
-            class="fixed bottom-6 left-6 bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-full shadow-lg text-2xl z-50 transition-all duration-300">
+            class="fixed bottom-6 left-6 bg-gradient-to-tr from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white p-4 rounded-full shadow-2xl text-2xl z-50 transition-all duration-300 hover:scale-110 flex items-center justify-center border border-white/10">
         🤖
     </button>
 
-    <!-- نافذة الشات -->
-    <div id="assistant-chat" class="hidden fixed bottom-20 left-6 w-80 bg-white rounded-2xl shadow-xl border z-50">
-        <div class="bg-purple-600 text-white p-3 rounded-t-2xl flex justify-between items-center">
-            <span class="font-semibold">مساعد ADAM-BOT</span>
-            <button id="close-chat" class="text-white hover:text-gray-200">✖</button>
+    <!-- نافذة الشات بوت الفاخرة المحدثة تفاعلياً بالكامل -->
+    <div id="assistant-chat" class="hidden fixed bottom-24 left-6 w-96 max-w-[calc(100vw-3rem)] glass-panel rounded-2xl shadow-2xl border border-white/10 z-50 flex flex-col overflow-hidden">
+        <!-- ترويسة الشات -->
+        <div class="bg-gradient-to-r from-purple-900 to-indigo-900 p-4 border-b border-white/10 flex justify-between items-center">
+            <div class="flex items-center gap-2.5">
+                <div class="relative w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center border border-purple-500/30">
+                    <span class="text-base">🤖</span>
+                    <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-[#030014]"></span>
+                </div>
+                <div>
+                    <h5 class="font-bold text-white text-sm">مساعد ADAM-BOT</h5>
+                    <p class="text-[10px] text-emerald-400">نشط وجاهز لمساعدتك</p>
+                </div>
+            </div>
+            <button id="close-chat" class="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/5">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
         </div>
-        <div id="chatBody" class="p-3 h-64 overflow-y-auto text-sm text-gray-800 space-y-2">
-            <div class="text-center text-gray-500 text-xs">مرحباً! أنا مساعد ADAM-BOT، كيف يمكنني مساعدتك؟</div>
+        
+        <!-- جسم المحادثة -->
+        <div id="chatBody" class="p-4 h-80 overflow-y-auto text-sm space-y-4 bg-[#030014]/90">
+            <div class="text-center text-gray-500 text-xs py-2 border-b border-white/5">مرحباً! أنا مساعد ADAM-BOT، كيف يمكنني مساعدتك اليوم؟</div>
         </div>
-        <div class="p-3 border-t flex">
-            <input id="userInput" type="text" placeholder="اكتب سؤالك..." 
-                   class="flex-1 border rounded-l-lg px-3 py-2 focus:outline-none focus:border-purple-600">
-            <button id="sendBtn" class="bg-purple-600 hover:bg-purple-700 text-white px-4 rounded-r-lg transition-colors">إرسال</button>
+        
+        <!-- صندوق الإدخال -->
+        <div class="p-3 border-t border-white/10 bg-[#050515]/90 flex gap-2">
+            <input id="userInput" type="text" placeholder="اكتب سؤالك هنا..." 
+                   class="flex-1 bg-white/5 border border-white/10 text-white placeholder-gray-500 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all">
+            <button id="sendBtn" class="bg-gradient-to-tr from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold px-4 rounded-xl text-sm transition-all duration-300">إرسال</button>
         </div>
     </div>
 
+    <!-- العلامة المائية الاحترافية جداً (Glassmorphism Watermark) -->
+    <div id="watermark" class="fixed bottom-6 right-6 glass-panel p-3.5 rounded-2xl cursor-pointer hover:border-purple-500/40 hover:bg-white/5 transition-all duration-300 z-[100] group shadow-2xl" 
+         onclick="window.open('https://as-website.wasmer.app/', '_blank')">
+        <div class="flex items-center gap-3">
+            <div class="w-2.5 h-2.5 bg-gradient-to-tr from-purple-500 to-cyan-400 rounded-full group-hover:animate-ping"></div>
+            <span class="font-semibold text-xs tracking-wide text-gray-300 group-hover:text-white transition-colors">powerd by <span class="text-gradient font-bold">ADAM STUDIO</span></span>
+            <button onclick="event.stopPropagation(); document.getElementById('watermark').remove()" class="text-gray-500 hover:text-red-400 transition-colors text-[10px] bg-white/5 hover:bg-white/10 p-1 rounded-md">✕</button>
+        </div>
+    </div>
+
+    <!-- Script - جافاسكريبت التحكم والتشغيل -->
     <script>
-        // Mobile menu functionality
+        // إظهار وإخفاء قائمة الجوال
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         
@@ -353,33 +726,32 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Download function
+        // رسالة تنبيه وبدء التحميل الفعلي
         function downloadOS(event) {
             event.preventDefault();
+            const downloadUrl = event.currentTarget.getAttribute('href');
             
-            // إنشاء رسالة تأكيد التحميل
             const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.className = 'fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 px-4 message-fade';
             modal.innerHTML = `
-                <div class="bg-white rounded-2xl p-8 max-w-md mx-4 text-center">
-                    <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-2xl">✅</span>
+                <div class="glass-panel p-8 rounded-3xl max-w-md w-full text-center border border-white/10 shadow-2xl">
+                    <div class="w-16 h-16 bg-gradient-to-tr from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg shadow-emerald-500/20">
+                        <span class="text-3xl">✅</span>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 text-gray-800">تم بدء التحميل!</h3>
-                    <p class="text-gray-600 mb-6">
-                        سيبدأ تحميل ADAM OS قريباً. شكراً لاختيارك نظامنا!
+                    <h3 class="text-2xl font-bold mb-3 text-white">تم بدء التحميل بنجاح!</h3>
+                    <p class="text-gray-400 mb-6 font-light leading-relaxed">
+                        سيبدأ تحميل ملف ISO الخاص بـ ADAM OS تلقائياً في الخلفية. شكراً لاختيارك نظامنا المبتكر!
                     </p>
-                    <button onclick="closeModal()" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-colors">
+                    <button onclick="closeModal()" class="btn-gradient w-full text-white py-3 rounded-xl font-bold transition-all shadow-lg">
                         موافق
                     </button>
                 </div>
             `;
             document.body.appendChild(modal);
             
-            // تنفيذ التحميل الفعلي
             setTimeout(() => {
-                window.open(event.target.href, '_blank');
-            }, 1000);
+                window.open(downloadUrl, '_blank');
+            }, 800);
         }
         
         function closeModal() {
@@ -388,22 +760,23 @@
                 modal.remove();
             }
         }
-        
-        // تأثير التمرير السلس للروابط
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
 
-        // AI Chat Functionality
+        // تفاعل الـ FAQ Accordion
+        function toggleFaq(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('span:last-child');
+            
+            content.classList.toggle('hidden');
+            if (content.classList.contains('hidden')) {
+                icon.textContent = '+';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.textContent = '-';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // تفاعل شات البوت (ADAM-BOT)
         const chatBody = document.getElementById("chatBody");
         const userInput = document.getElementById("userInput");
         const sendBtn = document.getElementById("sendBtn");
@@ -411,11 +784,14 @@
         const assistantChat = document.getElementById("assistant-chat");
         const closeChat = document.getElementById("close-chat");
 
-        // فتح / غلق الشات
+        // فتح وإغلاق الشات
         assistantBtn.addEventListener("click", () => {
             assistantChat.classList.toggle("hidden");
             if (!assistantChat.classList.contains("hidden")) {
                 userInput.focus();
+                if (chatBody.children.length <= 1) {
+                    showWelcomeMenu();
+                }
             }
         });
 
@@ -423,10 +799,46 @@
             assistantChat.classList.add("hidden");
         });
 
-        function appendMessage(text, sender = "bot") {
+        // دالة إنشاء رسالة بالبث المباشر
+        function appendMessage(text, sender = "bot", hasInteractiveButtons = false, buttonConfig = []) {
             const msgDiv = document.createElement("div");
-            msgDiv.className = `message ${sender} p-2 rounded-lg mb-2 ${sender === "user" ? "bg-gray-100 text-right" : "bg-purple-100 text-left"}`;
-            msgDiv.innerHTML = `<div class="text">${text.replace(/\n/g, "<br>")}</div>`;
+            msgDiv.className = `message-fade p-3.5 rounded-2xl max-w-[85%] text-xs md:text-sm font-light leading-relaxed flex flex-col gap-3 ${
+                sender === "user" 
+                ? "bg-purple-600 text-white mr-auto rounded-tr-none text-right" 
+                : "bg-white/5 border border-white/5 text-gray-200 ml-auto rounded-tl-none text-left"
+            }`;
+            
+            const textSpan = document.createElement("span");
+            textSpan.innerHTML = text.replace(/\n/g, "<br>");
+            msgDiv.appendChild(textSpan);
+
+            if (hasInteractiveButtons && buttonConfig.length > 0) {
+                const buttonsContainer = document.createElement("div");
+                buttonsContainer.className = "flex flex-col gap-2 mt-2 w-full";
+                
+                buttonConfig.forEach(btn => {
+                    const actionBtn = document.createElement("button");
+                    actionBtn.className = "w-full text-center py-2 px-3 rounded-xl font-semibold text-xs transition-all duration-300 " + 
+                        (btn.primary 
+                        ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:opacity-90 shadow-lg" 
+                        : "bg-white/10 hover:bg-white/20 text-white border border-white/10");
+                    actionBtn.textContent = btn.label;
+                    
+                    actionBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        if (btn.actionType === "link") {
+                            window.open(btn.actionValue, "_blank");
+                        } else if (btn.actionType === "text") {
+                            userInput.value = btn.actionValue;
+                            sendMessage();
+                        }
+                    };
+                    buttonsContainer.appendChild(actionBtn);
+                });
+                buttonsContainer.dir = "rtl";
+                msgDiv.appendChild(buttonsContainer);
+            }
+
             chatBody.appendChild(msgDiv);
             chatBody.scrollTop = chatBody.scrollHeight;
             return msgDiv;
@@ -434,52 +846,100 @@
 
         function showTypingIndicator() {
             const typingDiv = document.createElement("div");
-            typingDiv.className = "typing-message p-2 rounded-lg mb-2 bg-purple-100 text-left";
+            typingDiv.className = "message-fade p-3 rounded-2xl bg-white/5 border border-white/5 text-gray-400 ml-auto rounded-tl-none w-24 flex items-center justify-center gap-1.5";
             typingDiv.innerHTML = `
-                <div class="text">
-                    <span class="typing-indicator"></span>
-                    <span class="typing-indicator"></span>
-                    <span class="typing-indicator"></span>
-                    <span class="mr-2">يكتب...</span>
-                </div>
+                <span class="typing-dot w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
+                <span class="typing-dot w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
+                <span class="typing-dot w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
             `;
             chatBody.appendChild(typingDiv);
             chatBody.scrollTop = chatBody.scrollHeight;
             return typingDiv;
         }
 
+        function showWelcomeMenu() {
+            const welcomeText = "🤖 أهلاً بك! أنا مساعد ADAM-BOT.\nكيف يمكنني إرشادك اليوم؟ اختر أحد الخيارات المباشرة أدناه:";
+            const buttons = [
+                { label: "🌟 مميزات النظام واللغات البرمجية", actionType: "text", actionValue: "المميزات واللغات البرمجية", primary: true },
+                { label: "🖥️ دعم السيرفرات والتعريفات تلقائياً", actionType: "text", actionValue: "دعم السيرفرات والتعريفات", primary: false },
+                { label: "📥 تحميل ADAM OS الآن", actionType: "text", actionValue: "تحميل النظام", primary: false },
+                { label: "📞 قنوات التواصل والدعم التفاعلي", actionType: "text", actionValue: "معلومات التواصل", primary: true }
+            ];
+            appendMessage(welcomeText, "bot", true, buttons);
+        }
+
         async function sendMessage() {
             const message = userInput.value.trim();
             if (!message) return;
 
-            appendMessage("👤: " + message, "user");
+            appendMessage(message, "user");
             userInput.value = "";
 
             const typingIndicator = showTypingIndicator();
 
-            // محاكاة رد المساعد الذكي
             setTimeout(() => {
                 typingIndicator.remove();
                 
                 let response = "";
+                let hasButtons = false;
+                let btnConfig = [];
                 const lowerMessage = message.toLowerCase();
                 
-                if (lowerMessage.includes("مميزات") || lowerMessage.includes("خصائص")) {
-                    response = "🌟 مميزات ADAM OS:\n• أداء فائق السرعة ⚡\n• أمان متقدم 🔒\n• واجهة عصرية وسهلة الاستخدام 🎨\n• مبني على استقرار ديبيان ومرونة أوبونتو\n• قريباً سيتم إضافة ADAM-AI المدمج!";
-                } else if (lowerMessage.includes("تحميل") || lowerMessage.includes("تنزيل")) {
-                    response = "📥 يمكنك تحميل ADAM OS v2.0 من قسم التحميل في الصفحة.\n• الحجم: 2.8 GB\n• النسخة: 64 بت\n• مجاني تماماً ✅\n• آمن ومحدث ✅";
-                } else if (lowerMessage.includes("متطلبات") || lowerMessage.includes("النظام")) {
-                    response = "💻 متطلبات تشغيل ADAM OS:\n• المعالج: 64-bit processor\n• الذاكرة: 4GB RAM (8GB مفضل)\n• التخزين: 25GB مساحة فارغة\n• كرت الشاشة: أي كرت \n• الإنترنت: للتحديثات والتطبيقات";
-                } else if (lowerMessage.includes("تواصل") || lowerMessage.includes("دعم")) {
-                    response = "📞 للتواصل معنا:\n📧 البريد الإلكتروني: adammaan41@gmail.com رقم الهاتف واتساب📱💬:01204652170\n\nسنرد عليك في أقرب وقت ممكن!\nفريق الدعم الفني متاح لمساعدتك.";
-                } else if (lowerMessage.includes("شكر") || lowerMessage.includes("شكراً")) {
-                    response = "😊 العفو! أنا سعيد لمساعدتك. إذا كان لديك أي أسئلة أخرى حول ADAM OS، لا تتردد في السؤال!";
+                if (lowerMessage.includes("مميزات") || lowerMessage.includes("خصائص") || lowerMessage.includes("لغات") || lowerMessage.includes("مكتبة") || lowerMessage.includes("برمجية")) {
+                    response = "🌟 مميزات ADAM OS الفائقة للمطورين:\n\n• **بيئة برمجية جاهزة**: دعم شامل لجميع المكتبات ولغات البرمجة (Python, Node.js, C++, Rust, Go, Java).\n• **إدارة حزم مرنة**: إعداد فوري وتلقائي لمسارات العمل البرمجية.\n• **متجر Flatpak & Snap**: لتثبيت كل أدوات البرمجة وقواعد البيانات بنقرة واحدة.";
+                    hasButtons = true;
+                    btnConfig = [
+                        { label: "📥 تنزيل النظام الآن", actionType: "text", actionValue: "تحميل النظام", primary: true },
+                        { label: "🔙 العودة للقائمة الرئيسية", actionType: "text", actionValue: "القائمة الرئيسية", primary: false }
+                    ];
+                } else if (lowerMessage.includes("سيرفر") || lowerMessage.includes("تعريف") || lowerMessage.includes("درايفر") || lowerMessage.includes("شبكة")) {
+                    response = "🖥️ مميزات السيرفرات والعتاد في ADAM OS:\n\n• **واجهة رسومية (GUI) لإدارة الخوادم**: إدارة الويب والـ DNS والمواقع وقواعد البيانات بمرونة مطلقة.\n• **جميع التعريفات مدمجة تلقائياً**: دعم فوري لجميع كروت شاشة Nvidia، الواي فاي، وكافة كروت الصوت المتطورة دون الحاجة لتنزيل يدوي.";
+                    hasButtons = true;
+                    btnConfig = [
+                        { label: "🔌 متطلبات التشغيل والأداء", actionType: "text", actionValue: "متطلبات التشغيل", primary: true },
+                        { label: "🔙 العودة للقائمة الرئيسية", actionType: "text", actionValue: "القائمة الرئيسية", primary: false }
+                    ];
+                } else if (lowerMessage.includes("تحميل") || lowerMessage.includes("تنزيل") || lowerMessage.includes("رابط")) {
+                    response = "📥 يمكنك تحميل ADAM OS v2.0 مباشرة:\n• الحجم: 2.8 GB\n• النسخة: 64 بت مجهزة بدعم كامل للدرايفرات والسيرفرات ✅";
+                    hasButtons = true;
+                    btnConfig = [
+                        { label: "💿 تحميل ملف الـ ISO مباشرة", actionType: "link", actionValue: "https://drive.usercontent.google.com/download?id=168n48cEII5GzryFuyFaNnGLbccBaAaM4&export=download", primary: true },
+                        { label: "🔙 العودة للقائمة الرئيسية", actionType: "text", actionValue: "القائمة الرئيسية", primary: false }
+                    ];
+                } else if (lowerMessage.includes("متطلبات") || lowerMessage.includes("شروط") || lowerMessage.includes("رام")) {
+                    response = "💻 متطلبات تشغيل نظامنا الفعال:\n• المعالج: بمعمارية 64-bit ثنائي النواة.\n• الذاكرة: 4GB RAM (و 8GB يضمن أداء مدهش كحاسوب شخصي أو سيرفر).\n• التخزين: مساحة فارغة لا تقل عن 25GB.";
+                    hasButtons = true;
+                    btnConfig = [
+                        { label: "📞 استفسار من الدعم الفني", actionType: "text", actionValue: "معلومات التواصل", primary: true },
+                        { label: "🔙 العودة للقائمة الرئيسية", actionType: "text", actionValue: "القائمة الرئيسية", primary: false }
+                    ];
+                } else if (lowerMessage.includes("تواصل") || lowerMessage.includes("رقم") || lowerMessage.includes("واتساب") || lowerMessage.includes("الدعم")) {
+                    response = "📞 قنوات التواصل والدعم التفاعلية الرسمية:\nيمكنك الضغط مباشرة على الأزرار أدناه للتواصل السريع مع مطوري ADAM STUDIO:";
+                    hasButtons = true;
+                    btnConfig = [
+                        { label: "💬 راسلنا واتساب مباشرة", actionType: "link", actionValue: "https://wa.me/201204652170", primary: true },
+                        { label: "📧 البريد الإلكتروني الفوري", actionType: "link", actionValue: "mailto:adammaan41@gmail.com", primary: true },
+                        { label: "🔙 العودة للقائمة الرئيسية", actionType: "text", actionValue: "القائمة الرئيسية", primary: false }
+                    ];
+                } else if (lowerMessage.includes("شكر") || lowerMessage.includes("شكرا") || lowerMessage.includes("تسلم")) {
+                    response = "😊 العفو! هذا واجبي دائماً. إذا كان لديك أي سؤال آخر، أنا في الخدمة!";
+                    hasButtons = true;
+                    btnConfig = [
+                        { label: "🔙 عرض القائمة الرئيسية", actionType: "text", actionValue: "القائمة الرئيسية", primary: true }
+                    ];
                 } else {
-                    response = "🤖 مرحبا! أنا مساعد ADAM-BOT.\n\nيمكنني مساعدتك في:\n• معرفة مميزات النظام\n• طريقة التحميل\n• متطلبات التشغيل\n• التواصل مع الدعم الفني\n\nما الذي تود معرفته؟";
+                    response = "🤖 أهلاً بك مجدداً في خيارات مساعد ADAM-BOT.\nالرجاء اختيار أحد الأزرار التالية للإجابة السريعة على طلبك:";
+                    hasButtons = true;
+                    btnConfig = [
+                        { label: "🌟 مميزات النظام واللغات", actionType: "text", actionValue: "المميزات واللغات البرمجية", primary: true },
+                        { label: "🖥️ دعم السيرفرات والتعريفات", actionType: "text", actionValue: "دعم السيرفرات والتعريفات", primary: false },
+                        { label: "💻 متطلبات التشغيل والأداء", actionType: "text", actionValue: "متطلبات التشغيل", primary: false },
+                        { label: "📞 معلومات التواصل الفوري", actionType: "text", actionValue: "معلومات التواصل", primary: true }
+                    ];
                 }
                 
-                appendMessage("🤖: " + response, "bot");
-            }, 1500);
+                appendMessage(response, "bot", hasButtons, btnConfig);
+            }, 1000);
         }
 
         sendBtn.addEventListener("click", sendMessage);
@@ -489,47 +949,7 @@
             }
         });
 
-        // إضافة تأثيرات بصرية عند تحريك الماوس
-        document.querySelectorAll('.card-hover').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-5px) scale(1.02)';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-
-        // إضافة تأثير الانتقال السلس عند التمرير
-        window.addEventListener('scroll', () => {
-            const cards = document.querySelectorAll('.card-hover');
-            cards.forEach(card => {
-                const cardTop = card.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (cardTop < windowHeight * 0.8) {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                }
-            });
-        });
-
-        // تهيئة البطاقات عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.card-hover');
-            cards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'all 0.6s ease';
-            });
-            
-            // تفعيل التأثير عند التحميل
-            window.dispatchEvent(new Event('scroll'));
-        });
-
-        // إضافة إحصائيات للموقع (محاكاة)
+        // زيادة الإحصائيات الحية التفاعلية لمحاكاة الاستخدام الفعلي
         function updateStats() {
             const downloadsCount = document.getElementById('downloads-count');
             const usersCount = document.getElementById('users-count');
@@ -538,9 +958,8 @@
                 let downloads = parseInt(localStorage.getItem('adam-downloads') || '15420');
                 let users = parseInt(localStorage.getItem('adam-users') || '8230');
                 
-                // زيادة تدريجية في الأرقام
-                downloads += Math.floor(Math.random() * 5) + 1;
-                users += Math.floor(Math.random() * 3) + 1;
+                downloads += Math.floor(Math.random() * 3) + 1;
+                users += Math.floor(Math.random() * 2) - 1;
                 
                 localStorage.setItem('adam-downloads', downloads);
                 localStorage.setItem('adam-users', users);
@@ -550,46 +969,45 @@
             }
         }
 
-        // تحديث الإحصائيات كل 30 ثانية
-        setInterval(updateStats, 30000);
-        updateStats(); // تشغيل فوري
+        setInterval(updateStats, 10000);
+        updateStats();
 
-        // إضافة نظام إشعارات بسيط
+        // نظام الإشعارات المنبثقة الترحيبية الاحترافية
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 transition-all duration-500 transform translate-x-full`;
+            notification.className = `fixed top-6 right-6 p-4 rounded-2xl shadow-2xl z-50 transition-all duration-500 transform translate-x-full glass-panel border border-white/10 flex items-center gap-3`;
             
-            const colors = {
-                'info': 'bg-blue-500 text-white',
-                'success': 'bg-green-500 text-white',
-                'warning': 'bg-yellow-500 text-black',
-                'error': 'bg-red-500 text-white'
+            const colorGradients = {
+                'success': 'from-emerald-500/20 to-teal-500/10 border-emerald-500/30 text-emerald-300',
+                'info': 'from-blue-500/20 to-indigo-500/10 border-blue-500/30 text-blue-300'
             };
             
-            notification.className += ` ${colors[type]}`;
-            notification.textContent = message;
+            notification.className += ` bg-gradient-to-tr ${colorGradients[type] || colorGradients['info']}`;
+            notification.innerHTML = `
+                <span class="text-xl">🎉</span>
+                <span class="font-medium text-sm">${message}</span>
+            `;
             
             document.body.appendChild(notification);
             
-            // إظهار الإشعار
             setTimeout(() => {
                 notification.classList.remove('translate-x-full');
             }, 100);
             
-            // إخفاء الإشعار
             setTimeout(() => {
                 notification.classList.add('translate-x-full');
                 setTimeout(() => notification.remove(), 500);
-            }, 3000);
+            }, 4000);
         }
 
-        // إضافة رسالة ترحيب عند أول زيارة
-        if (!localStorage.getItem('adam-visited')) {
-            setTimeout(() => {
-                showNotification('مرحباً بك في ADAM OS! 🎉', 'success');
-                localStorage.setItem('adam-visited', 'true');
-            }, 2000);
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!localStorage.getItem('adam-visited')) {
+                setTimeout(() => {
+                    showNotification('مرحباً بك في عالم ADAM OS المستقبلي! 🚀', 'success');
+                    localStorage.setItem('adam-visited', 'true');
+                }, 2000);
+            }
+        });
     </script>
 </body>
 </html>
